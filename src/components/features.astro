@@ -1,0 +1,65 @@
+---
+import ContentSection from "~/components/content-section.astro";
+import { Icon } from "astro-icon";
+
+const features = [
+  {
+    title: "Be a part of us",
+    description:
+      "Free tutorials & paid courses, Premium memberships, Discord Server, Decentralised Matrix Server, Underground Forum, and more!",
+    icon: "mdi:handshake",
+  },
+  {
+    title: "For beginners to experts",
+    description:
+      "The cyber landscape is a world that is constantly evolving. Cyber threats, risks and attackers improve daily, but traditional antivirus programs do not. By constantly using the latest technologies and our training, you can become a certified. Who can then provide the best cybersecurity solution for any business need.",
+    icon: "eos-icons:machine-learning",
+  },
+  {
+    title: "Get your certificates",
+    description:
+      "Instead of paying thousands of dollars for a course. Let us help you with free structured tutorials to get your desired certificates, such as CEH, CISSP, GPEN, GXPN, OSCP and much more...",
+    icon: "icon-park-outline:certificate",
+  },
+  {
+    title: "Professional Access, Non-stop Availability",
+    description:
+      "Whether you want to become a hacker, a network engineer, cloud engineer or just want to know how to get started in IT, you’ve come to the right place.",
+    icon: "ps:promo",
+  },
+  {
+    title: "Own decentralized matrix server",
+    description:
+      "With us, communication is secure, thanks to our decentralized matrix server with end-to-end encrypted chat. You'll get access to it as soon as you purchase a Premium course.",
+    icon: "simple-icons:element",
+  },
+  {
+    title: "Collective",
+    description:
+      "We are a community of hackers, designers and developers dedicated to shaping the future of the Internet. We train you to become a part of it. On our Discord server you will find active live help and like-minded people. Always stay up to date and join our collective on Discord.",
+    icon: "mdi:account-group",
+  },
+];
+---
+
+<ContentSection title="Features" id="features">
+  <Fragment slot="lead">
+    T9R comes <span class="text-primary">including tools</span>. We provide you
+    with
+    <span class="text-primary">many things</span>
+    to get the <span class="text-primary">best</span> out of it.
+  </Fragment>
+  <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {
+      features.map(({ title, description, icon }) => (
+        <li class="flex flex-col items-center gap-4 p-6 border border-default bg-offset">
+          <div class="w-16 h-16 p-3 border-2 border-current rounded-full">
+            <Icon name={icon} />
+          </div>
+          <p class="text-xl font-extrabold text-center">{title}</p>
+          <p class="text-sm text-center text-offset">{description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</ContentSection>

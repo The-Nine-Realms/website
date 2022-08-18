@@ -1,0 +1,26 @@
+---
+import ContentSection from "~/components/content-section.astro";
+import ShowcaseCard from "~/components/showcase-card.astro";
+import sites from "~/data/showcase/sites.json";
+---
+
+<ContentSection title="Courses" id="showcase">
+  <Fragment slot="lead">
+    Here is an <span class="text-primary">overview</span> of our current{" "}
+    <span class="text-primary">courses</span>.
+  </Fragment>
+  <div class="max-w-6xl space-y-2">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        sites.map(({ title, image, url }) => (
+          <ShowcaseCard title={title} image={image} url={url} />
+        ))
+      }
+    </div>
+    <p class="text-sm text-right">
+      <a class="text-primary" href="https://astro.build/showcase/">
+        ...and more &rarr;
+      </a>
+    </p>
+  </div>
+</ContentSection>

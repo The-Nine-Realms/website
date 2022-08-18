@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="The 9 Realms" id="intro">
+  <Icon slot="eyebrow" name="logomark" class="h-32" />
+  <Fragment slot="lead">
+    Our collective helps
+    <span class="text-primary">you</span> become a
+    <span class="text-primary">part</span>
+    of the <span class="text-primary">hacker</span> scene.
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <a
+      href="https://docs.astro.build/"
+      class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
+    >
+      <Icon pack="logos" name="discord-icon" size="30" class="h-8" />
+      <span>Discord</span>
+    </a>
+    <a
+      href="#"
+      class="flex items-center justify-center gap-3 px-6 py-4 border-2 border-current"
+    >
+      <Icon pack="flat-color-icons" name="info" size="30" class="h-8" />
+      <span>More info</span>
+    </a>
+  </div>
+</ContentSection>

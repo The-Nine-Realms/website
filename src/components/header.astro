@@ -1,0 +1,514 @@
+---
+import { Icon } from "astro-icon";
+import ThemeSwitcher from "~/components/theme-switcher.astro";
+
+const navItems = [
+  { title: "Home", url: "#" },
+  { title: "About", url: "" },
+  { title: "Courses", url: "" },
+  { title: "Tutorials", url: "" },
+  { title: "Contact", url: "" },
+];
+---
+
+<header
+  id="page-header"
+  class="absolute bottom-0 z-10 flex items-center justify-between w-full px-8 py-4 text-white border-b border-transparent"
+>
+  <a class="flex items-center gap-3 hover:!text-default" href="#">
+    <h1 class="sr-only">The 9 Realms</h1>
+    <Icon name="logomark" class="h-10" />
+    <Icon name="wordmark" class="hidden h-4 sm:block" />
+  </a>
+  <div>
+    <div class="flex items-center gap-6">
+      <nav class="hidden sm:block">
+        <ul class="flex items-center gap-6">
+          {
+            navItems.map(({ title, url }) => (
+              <li>
+                <a class="text-sm" href={url}>
+                  {title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <button
+        id="open-nav-button"
+        type="button"
+        class="btn sm:hidden"
+        aria-label="Navigation"
+      >
+        <Icon pack="mdi" name="menu" class="h-8" />
+      </button>
+      <ThemeSwitcher />
+    </div>
+    <div id="menu-modal" class="hidden modal" aria-hidden="true">
+      <div class="fixed inset-0 px-8 py-4 bg-default">
+        <div class="space-y-4" role="dialog" aria-modal="true">
+          <header class="text-right">
+            <button
+              id="close-nav-button"
+              type="button"
+              class="btn"
+              aria-label="Close navigation"
+            >
+              <Icon pack="mdi" name="close" class="h-8" />
+            </button>
+          </header>
+          <div class="flex justify-center">
+            <Icon name="logomark" class="h-16" />
+          </div>
+          <nav>
+            <ul class="menu flex flex-col">
+              {
+                navItems.map(({ title, url }) => (
+                  <li class="menu__item">
+                    <a
+                      class="menu__link block py-4 text-xl text-center"
+                      href={url}
+                    >
+                      {title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import MicroModal from "micromodal";
+
+  const menuModalId = "menu-modal";
+
+  const header: HTMLElement = document.querySelector("#page-header");
+  const page = document.documentElement;
+  const menu = document.querySelector(`#${menuModalId} ul`);
+  const openNavButton = document.querySelector("#open-nav-button");
+  const closeNavButton = document.querySelector("#close-nav-button");
+
+  const openMenu = () => {
+    MicroModal.show(menuModalId, { disableScroll: true });
+  };
+
+  const closeMenu = () => {
+    MicroModal.close(menuModalId);
+  };
+
+  openNavButton.addEventListener("click", openMenu);
+  closeNavButton.addEventListener("click", closeMenu);
+
+  document.addEventListener("scroll", () => {
+    const d = page.clientHeight - page.scrollTop - header.offsetHeight;
+    header.classList.toggle("fixed-header", d < 0);
+  });
+
+  menu.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).tagName === "A") {
+      closeMenu();
+    }
+  });
+</script>
+
+<!-- https://github.com/withastro/compiler/issues/395 -->
+<!-- <noscript>
+  <style>
+    #open-nav-button {
+      @apply hidden;
+    }
+  </style>
+</noscript> -->
+
+<style>
+  .fixed-header {
+    @apply fixed top-0 bottom-auto;
+    @apply text-default bg-default border-default;
+  }
+
+  .modal.is-open {
+    @apply block;
+  }
+</style>
+
+<style lang="scss">
+  @font-face {
+    font-family: "Glitch";
+    src: url("../../fonts/Glitch.ttf");
+  }
+
+  :root {
+    --color-primary: white;
+    --color-secondary: #23272a;
+    --color-dark: #23272a;
+    --color-light: #00fff8;
+    --color-link: #97a9b4;
+    --font-family-primary: "Glitch", sans-serif;
+    // --font-family-secondary: 'Rubik Mono One', sans-serif;
+
+    --td: 150ms;
+    --te: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  // ========================
+  // Global elements
+  // ========================
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    // color: var(--color-dark);
+    // font-family: var(--font-family-primary);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  h1 {
+    font-size: calc(1.5rem + 4vmin);
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  p {
+    line-height: 1.4;
+  }
+
+  a {
+    font-weight: 700;
+  }
+
+  .page-container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    margin: 0 auto;
+    // max-width: 45rem;
+    padding: 1rem;
+
+    > * + * {
+      margin-top: 1.5rem;
+    }
+  }
+
+  // ================================
+  // Main navigation
+  // ================================
+
+  .nav-main {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: -100%;
+    position: fixed;
+    transition: left 0s calc(var(--td) * 2), transform 0s calc(var(--td) * 2);
+    width: 100%;
+
+    &::before,
+    &::after {
+      content: "";
+      background-color: #23272a;
+      height: 50%;
+      left: 0;
+      position: absolute;
+      transform: translateX(-110%);
+      transform-origin: 0 50%;
+      transition: transform calc(var(--td) * 2) var(--td) var(--te);
+      width: 100%;
+      z-index: -100;
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    .menu__item {
+      font-family: "Glitch", sans-serif;
+      opacity: 0;
+      transform: translateX(-1rem);
+      transition: opacity var(--td) var(--te), transform var(--td) var(--te);
+    }
+  }
+
+  // ================================
+  // Main navigation toggle
+  // ================================
+
+  [id="main-navigation-toggle"] {
+    opacity: 0;
+    position: fixed;
+    top: -100%;
+
+    ~ label {
+      cursor: pointer;
+      position: fixed;
+      right: 1rem;
+      top: 1rem;
+      z-index: 100;
+
+      span {
+        display: block;
+        height: 2rem;
+        padding: 0.5rem;
+        position: relative;
+        transition: transform calc(var(--td) * 3) var(--te);
+        width: 2rem;
+
+        &::before,
+        &::after {
+          background-color: var(--color-primary);
+          bottom: 0;
+          content: "";
+          height: 4px;
+          left: 0;
+          margin: auto;
+          position: absolute;
+          right: 0;
+          transition: transform calc(var(--td) * 3) var(--te);
+          top: 0;
+          width: calc(100% - 1rem);
+        }
+
+        &::before {
+          transform: rotate(0) translateY(-100%);
+        }
+
+        &::after {
+          transform: rotate(0) translateY(100%);
+        }
+      }
+    }
+  }
+
+  // ================================
+  // Main navigation toggle:checked
+  // ================================
+
+  [id="main-navigation-toggle"]:checked ~ label {
+    span {
+      transform: rotate(1turn);
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  [id="main-navigation-toggle"]:checked ~ .nav-main {
+    z-index: 2;
+    left: 0;
+    transition: transform 0s;
+
+    &::before,
+    &::after {
+      transform: translateX(0);
+      transition-delay: 0s;
+    }
+
+    &::after {
+      transition-delay: calc(var(--td) / 2);
+    }
+
+    .menu__item {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity calc(var(--td) * 2) var(--te),
+        transform calc(var(--td) * 2) var(--te);
+    }
+
+    @for $i from 1 through 5 {
+      .menu__item:nth-child(#{$i}) {
+        transition-delay: calc(var(--td) * 2 * (#{$i} * 0.25));
+        z-index: $i * -1;
+      }
+    }
+  }
+
+  // ================================
+  // Menu
+  // ================================
+
+  .menu {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+
+    > .menu__item {
+      // font-family: var(--font-family-secondary);
+      font-size: 10vmin;
+    }
+  }
+
+  // ================================
+  // Submenu
+  // ================================
+
+  .submenu {
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-10%);
+    top: 100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 2;
+
+    .menu__item {
+      font-family: var(--font-family-primary);
+      font-size: 3.5vmin;
+      width: 100%;
+    }
+
+    .menu__link {
+      color: var(--color-secondary);
+      text-shadow: 1px 1px 0 var(--color-primary),
+        2px 2px 0 var(--color-primary);
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  // ================================
+  // Menu item
+  // ================================
+
+  .menu__item {
+    display: block;
+    position: relative;
+
+    &:hover .menu__link {
+      &::before,
+      &::after {
+        animation: blink 1s var(--td) steps(1, end) forwards infinite;
+        transform: translateX(calc(100% - 0.5rem));
+        transition-duration: calc(var(--td) * 3);
+      }
+
+      &::after {
+        transition-delay: calc(var(--td) / 2);
+      }
+    }
+
+    &:hover .submenu {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform calc(var(--td) * 2) calc(var(--td) * 3) var(--te),
+        opacity calc(var(--td) * 2) calc(var(--td) * 3) var(--te),
+        visibility 0s calc(var(--td) * 3);
+      visibility: visible;
+    }
+  }
+
+  // ================================
+  // Menu link
+  // ================================
+
+  .menu__link {
+    color: var(--color-link);
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0.5rem 1rem 0.125rem;
+    position: relative;
+    text-decoration: none;
+    transition: color var(--td) var(--te), opacity var(--td) var(--te),
+      transform var(--td) var(--te);
+    z-index: 1;
+
+    &::before,
+    &::after {
+      content: "";
+      background-color: var(--color-light);
+      height: 50%;
+      left: 0;
+      position: absolute;
+      transform: translateX(-110%);
+      transform-origin: 0 50%;
+      transition: transform 0s var(--te);
+      width: 100%;
+      z-index: -1;
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+  }
+
+  // ================================
+  // Menu item hover styles
+  // ================================
+
+  .menu:not(:focus-within):not(:hover) .menu__item {
+    .menu__link {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  .menu__item {
+    --pull: 30%;
+
+    .menu__link {
+      opacity: 0.25;
+      transition-duration: calc(var(--td) * 3);
+      transform: translate(0, calc(var(--pull) * -1));
+    }
+
+    .submenu .menu__link {
+      opacity: 1;
+    }
+
+    &:hover > .menu__link {
+      color: white;
+      opacity: 1;
+      transform: translate(0, 0);
+
+      &:hover {
+        color: var(--color-light);
+        transition-delay: 0s;
+      }
+    }
+
+    &:hover ~ .menu__item > .menu__link {
+      transition-duration: calc(var(--td) * 3);
+      transform: translate(0, var(--pull));
+    }
+  }
+
+  // ================================
+  // Animations
+  // ================================
+
+  @keyframes blink {
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

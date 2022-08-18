@@ -1,0 +1,54 @@
+---
+import { Icon } from "astro-icon";
+import HeroImage from "~/components/hero-image.astro";
+
+const links = [
+  {
+    url: "https://www.youtube.com/channel/UC2H6l3SRY-UtnLDXfPGCJvg",
+    description: "T9R's official YouTube channel",
+    icon: "akar-icons:youtube-fill",
+  },
+  {
+    url: "https://github.com/The-Nine-Realms",
+    description: "T9R on GitHub",
+    icon: "akar-icons:github-fill",
+  },
+  {
+    url: "https://astro.build/chat",
+    description: "T9R on Discord",
+    icon: "akar-icons:discord-fill",
+  },
+  {
+    url: "https://twitter.com/astrodotbuild",
+    description: "T9R on Twitter",
+    icon: "ps:twitter-alt",
+  },
+];
+---
+
+<footer class="relative flex items-center justify-center h-64">
+  <div class="absolute inset-0 overflow-hidden opacity-40">
+    <HeroImage />
+  </div>
+  <ul class="relative grid grid-cols-2 gap-4 sm:grid-cols-4">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            class="flex items-center justify-center w-16 h-16 p-4 border-2 border-current rounded-full"
+            href={link.url}
+            target={"_blank"}
+          >
+            <span class="sr-only">{link.description}</span>
+            <Icon class="h-full" name={link.icon} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</footer>
+<style scoped>
+  [astro-icon] {
+    color: #00d6cb;
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import ContentSection from "~/components/content-section.astro";
+import CompatibilityList from "~/components/compatibility-list.astro";
+
+const frameworks = [
+  {
+    title: "Matrix",
+    icon: "cib:matrix",
+    url: "https://matrix.org",
+  },
+  {
+    title: "Element",
+    icon: "simple-icons:element",
+    url: "https://element.the9realms.de/",
+  },
+  {
+    title: "Discord",
+    icon: "akar-icons:discord-fill",
+    url: "https://discord.t9realms.dev",
+  },
+  {
+    title: "Forum",
+    icon: "mdi:forum",
+    url: "",
+  },
+  {
+    title: "Premium",
+    icon: "fluent:premium-person-24-regular",
+    url: "",
+  },
+  {
+    title: "Tutorials",
+    icon: "dashicons:welcome-learn-more",
+    url: "",
+  },
+];
+
+const platforms = [
+  {
+    title: "Linux+",
+    icon: "cib:linux",
+    url: "",
+  },
+  {
+    title: "Security+",
+    icon: "ic:outline-security",
+    url: "",
+  },
+  {
+    title: "Network+",
+    icon: "clarity:network-globe-line",
+    url: "https://pages.cloudflare.com/",
+  },
+  {
+    title: "Pentest+",
+    icon: "cib:hackaday",
+    url: "https://render.com/",
+  },
+  {
+    title: "CEH",
+    icon: "fa:user-secret",
+    url: "",
+  },
+  // {
+  //   title: "GitLab",
+  //   icon: "fa-brands:gitlab",
+  //   url: "https://docs.gitlab.com/ee/user/project/pages/",
+  // },
+];
+---
+
+<ContentSection title="Tools" id="compatibility">
+  <Fragment slot="lead">
+    T9R <span class="text-primary">plays nice</span>. Use our{" "}
+    <span class="text-primary">tools</span>
+    and use your favorite <span class="text-primary">platform</span>.
+  </Fragment>
+  <CompatibilityList title="Tools" data={frameworks} url="" />
+  <CompatibilityList title="Certificates" data={platforms} url="" />
+</ContentSection>
