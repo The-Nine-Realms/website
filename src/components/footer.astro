@@ -1,27 +1,27 @@
 ---
-import { Icon } from "astro-icon";
-import HeroImage from "~/components/hero-image.astro";
+import { Icon } from 'astro-icon';
+import HeroImage from '~/components/hero-image.astro';
 
 const links = [
   {
-    url: "https://www.youtube.com/channel/UC2H6l3SRY-UtnLDXfPGCJvg",
+    url: 'https://www.youtube.com/channel/UC2H6l3SRY-UtnLDXfPGCJvg',
     description: "T9R's official YouTube channel",
-    icon: "akar-icons:youtube-fill",
+    icon: 'akar-icons:youtube-fill',
   },
   {
-    url: "https://github.com/The-Nine-Realms",
-    description: "T9R on GitHub",
-    icon: "akar-icons:github-fill",
+    url: 'https://github.com/The-Nine-Realms',
+    description: 'T9R on GitHub',
+    icon: 'akar-icons:github-fill',
   },
   {
-    url: "https://astro.build/chat",
-    description: "T9R on Discord",
-    icon: "akar-icons:discord-fill",
+    url: 'https://astro.build/chat',
+    description: 'T9R on Discord',
+    icon: 'akar-icons:discord-fill',
   },
   {
-    url: "https://twitter.com/astrodotbuild",
-    description: "T9R on Twitter",
-    icon: "ps:twitter-alt",
+    url: 'https://twitter.com/astrodotbuild',
+    description: 'T9R on Twitter',
+    icon: 'ps:twitter-alt',
   },
 ];
 ---
@@ -37,7 +37,7 @@ const links = [
           <a
             class="flex items-center justify-center w-16 h-16 p-4 border-2 border-current rounded-full"
             href={link.url}
-            target={"_blank"}
+            target={'_blank'}
           >
             <span class="sr-only">{link.description}</span>
             <Icon class="h-full" name={link.icon} />
@@ -47,8 +47,3 @@ const links = [
     }
   </ul>
 </footer>
-<style scoped>
-  [astro-icon] {
-    color: #00d6cb;
-  }
-</style>
